@@ -182,11 +182,11 @@ class RandomCourse:
         assert self.end_date
 
         # Make sure we're passing in a datetime, not a date
-        start = datetime.datetime.combine(start, datetime.time())
+        start = datetime.datetime.combine(start, datetime.time(), tzinfo=datetime.UTC)
 
         # time() is midnight, so make sure we get that last day in there
         end = datetime.datetime.combine(
-            self.end_date, datetime.time()
+            self.end_date, datetime.time(), tzinfo=datetime.UTC
         ) + datetime.timedelta(days=1)
 
         return self._random_datetime(start_datetime=start, end_datetime=end)
@@ -210,7 +210,7 @@ class RandomCourse:
         delta = end_datetime - start_datetime
         int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
         random_second = randrange(int_delta)
-        return (start_datetime + datetime.timedelta(seconds=random_second)).replace(tzinfo=datetime.UTC)
+        return start_datetime + datetime.timedelta(seconds=random_second)
 
     def get_enrolled_actor(self) -> EnrolledActor:
         """
