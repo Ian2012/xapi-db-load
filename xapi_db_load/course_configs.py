@@ -210,7 +210,7 @@ class RandomCourse:
         delta = end_datetime - start_datetime
         int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
         random_second = randrange(int_delta)
-        return start_datetime + datetime.timedelta(seconds=random_second)
+        return (start_datetime + datetime.timedelta(seconds=random_second)).replace(tzinfo=datetime.UTC)
 
     def get_enrolled_actor(self) -> EnrolledActor:
         """
